@@ -134,12 +134,23 @@ SortableTree.Node = Class.create({
   },
 
   onHover: function(drag, drop, overlap) {		
-    this.dropPosition = overlap < 0.33 ? 'bottom' : overlap > 0.77 ? 'top' : 'insert';
+		if(this.canContainChildren(drop)) {
+		  this.dropPosition = overlap < 0.33 ? 'bottom' : overlap > 0.77 ? 'top' : 'insert';
+		} else {
+			this.dropPosition = overlap < 0.5 ? 'bottom' : 'top';
+		}
     this.mark(drop);
 		// $('log').update('hovering: ' + drop.tagName + ': ' + drop.id + "<br />" + 
 		//                 'classes: ' + drop.className + "<br />" + 
 		// 							  'dropPosition: ' + this.dropPosition)
-  },
+  },	
+
+	canContainChildren: function(element) {
+		if(this.options.droppable.container) {
+			return element.match(this.options.droppable.container);
+		}
+		return true;
+	},
 
   onDrop: function(drag, drop, event) {
     drag = this.tree.find(drag);

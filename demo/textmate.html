@@ -104,6 +104,9 @@
 
 <script>
   var tree = new SortableTree('tree', {
+    droppable: {
+      container: ':not(.file)'
+    },
     onDrop: function(drag, drop, event){
       $('log').update($('log').innerHTML + "<p>" + drag.to_params() + "</p>")
     }
