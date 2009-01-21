@@ -44,8 +44,8 @@ SortableTree.Node = Class.create({
     }, options || {});
 
     this.droppable_options = Object.extend({
-      onHover:      function(drag, drop, overlap){ this.onHover(drag, drop, overlap) }.bind(this),
-      onDrop:       function(drag, drop, event){ this.onDrop(drag, drop, event) }.bind(this), 
+      onHover:      function(drag, drop, overlap){ this.onHover(drag, drop, overlap); }.bind(this),
+      onDrop:       function(drag, drop, event){ this.onDrop(drag, drop, event); }.bind(this), 
       overlap:      'vertical',
       hoverclass:   'drop_hover'
     }, options.droppable);
@@ -63,7 +63,7 @@ SortableTree.Node = Class.create({
       }
     }, options.draggable);
 
-    this.initChildren()
+    this.initChildren();
   },
   
   id: function() {
@@ -81,7 +81,7 @@ SortableTree.Node = Class.create({
   
   initChildren: function() {
     this.children = [];  
-    var container = this.findContainer(this.element)
+    var container = this.findContainer(this.element);
     if(container){
       $A(container.childNodes).each(function(child) {
         if(this.acceptTagName(child)) {
@@ -92,19 +92,19 @@ SortableTree.Node = Class.create({
   },
 
   acceptTagName: function(element) {
-    return element.tagName && element.tagName.toUpperCase() == this.options.tagName
+    return element.tagName && element.tagName.toUpperCase() == this.options.tagName;
   },
 
   setSortable: function() {
     Droppables.add(this.element, this.droppable_options);
     this.draggable = new Draggable(this.element, this.draggable_options);
-    this.children.each(function(child) { child.setSortable() });
+    this.children.each(function(child) { child.setSortable(); });
   },
 
   setUnsortable: function() {
-		Droppables.remove(this.element)
+		Droppables.remove(this.element);
 		this.draggable.destroy();
-    this.children.each(function(child) { child.setUnsortable() });
+    this.children.each(function(child) { child.setUnsortable(); });
   },
   
   find: function(element) {
@@ -118,7 +118,7 @@ SortableTree.Node = Class.create({
   findContainer: function(element) {
     if(element.tagName != this.options.containerTagName) {
       element = $A(element.childNodes).detect(function(node) { 
-        return node.tagName == this.options.containerTagName
+        return node.tagName == this.options.containerTagName;
       }.bind(this));
     }
     return element;
@@ -179,7 +179,7 @@ SortableTree.Node = Class.create({
     ['drop_top', 'drop_bottom', 'drop_insert'].each(function(classname){
       Element.removeClassName(this.element, classname);
     }.bind(this));
-		this.children.each(function(child) { child.unmark(); }) 
+		this.children.each(function(child) { child.unmark(); });
   },
   
   to_params: function(name) {
@@ -205,7 +205,7 @@ SortableTree.Node = Class.create({
   
   removeChild: function(node) {
     this.children.splice(this.children.indexOf(node), 1);
-    node.element.parentNode.removeChild(node.element)
+    node.element.parentNode.removeChild(node.element);
   },
   
   insertBefore: function(node, sibling) {
@@ -216,6 +216,6 @@ SortableTree.Node = Class.create({
     var pos = sibling ? this.children.indexOf(sibling) : this.children.length;
     this.children.splice(pos, 0, node);
 
-    this.findOrCreateContainer(this.element).insertBefore(node.element, sibling ? sibling.element : null)
+    this.findOrCreateContainer(this.element).insertBefore(node.element, sibling ? sibling.element : null);
   }
 });
